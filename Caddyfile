@@ -1,0 +1,10 @@
+0.0.0.0
+gzip
+log /code/access.log
+
+# express server
+proxy /route/v1/walk osrm_walk:5000
+
+proxy / osrm_car:5000
+
+root /code
