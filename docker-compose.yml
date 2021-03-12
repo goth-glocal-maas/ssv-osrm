@@ -1,19 +1,29 @@
 version: "3"
 services:
-  osrm_car:
-    image: osrm/osrm-backend
+  car-routing:
+    image: osrm/osrm-backend:v5.22.0
     restart: always
     volumes:
       - ./bkk/car:/data
+    networks:
+      - proxy_default
     command: osrm-routed --algorithm mld -p 5000 /data/custom.osrm
     expose:
       - 5000
 
-  osrm_walk:
-    image: osrm/osrm-backend
+  walk-routing:
+    image: osrm/osrm-backend:v5.22.0
     restart: always
     volumes:
       - ./bkk/walk:/data
+    networks:
+      - proxy_default
     command: osrm-routed --algorithm mld -p 5000 /data/custom.osrm
     expose:
       - 5000
+
+
+networks:
+  proxy_default:
+    external: true
+
