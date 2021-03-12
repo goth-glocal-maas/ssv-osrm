@@ -1,25 +1,19 @@
-version: "3.7"
+version: "3"
 services:
-  caddy:
-    image: abiosoft/caddy:no-stats
-    volumes:
-      - ./Caddyfile:/etc/Caddyfile
-      - ./:/code
-    ports:
-      - "1180:2015"
-
   osrm_car:
     image: osrm/osrm-backend
-    ports:
-      - "5000:5000"
+    restart: always
     volumes:
       - ./bkk/car:/data
     command: osrm-routed --algorithm mld -p 5000 /data/custom.osrm
+    expose:
+      - 5000
 
   osrm_walk:
     image: osrm/osrm-backend
-    ports:
-      - "5001:5000"
+    restart: always
     volumes:
       - ./bkk/walk:/data
     command: osrm-routed --algorithm mld -p 5000 /data/custom.osrm
+    expose:
+      - 5000
